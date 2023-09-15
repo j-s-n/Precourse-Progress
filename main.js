@@ -161,30 +161,30 @@ const trim = (string) => {
 // shift() removes a value from the beginning and returns it
 // the goal of this problem is to reverse engineer what array methods are actually doing and return an object that has those methods
 const createArray = () => {
-  // return a new object with methods below
-  return obj = {
+  // initliize empty array constant
+	const arr = [];
     //push method assigns the paramet to the next index
-    push : function(val) {obj[Object.values(obj).length + 1] = val},
+    arr.push = function(val) {arr[arr.length] = val};
     //pop method assigns the paramet to the next index
-    pop : function() {
+    obj.pop = function() {
       //assign last value of object to popValue const
       const popValue = obj[Object.values(obj).length];
       //delete the last property
       delete obj[Object.values(obj).length];
       //return popValue
       return popValue;
-    },
+    };
     //unshift method takes a value
-    unshift : function(val) {
+    obj.unshift = function(val) {
       //iterate through the obj and increment all keys
       for(let key in obj) {
         obj[key++];
       }
       //assign obj with 0 key to value
       obj[0] = val;
-    },
+    };
     //shift method takes a value
-    shift : function() {
+    obj.shift = function() {
       const shiftValue = obj[0];
       //delete first property
       delete obj[0];
@@ -194,9 +194,10 @@ const createArray = () => {
       }
       //return shiftValue
       return shiftValue;
-    }
-  }
+    };
+	return arr;
 };
+
 
 ///////////////ADVANCED CHALLENGES///////////////
 
@@ -210,7 +211,7 @@ const forEach = (array, callback) => {
   // iterate through the array using a for loop
   for(let i = 0; i < array.length; i++) {
     //return eval result of element, i and array
-    return callback(array[i], i, array);
+    console.log(callback(array[i], i, array));
   }
 }
 
@@ -244,7 +245,7 @@ function filter(collection, callback) {
 	//create a results array
 	const results = [];
 	//iterate through the collection using forEach
-	array.forEach((el, i, arr) => {
+	collection.forEach((el, i, arr) => {
 	  //if the eval result of the cb passing in the element, i, and array is true, push the element to results 
 	  if(callback(el, i, arr)) {results.push(el)};;
 	})
@@ -262,12 +263,14 @@ function filter(collection, callback) {
 // }); → {b:2, d:4}
 // Challenge: use filter
 function reject(collection, callback) {
-	//create a results
-	const results;
+	//check to see if collection is array and assign results array
+	//if(Array.isArray(collection)) {let results = []};
+	let results = [];
+	if(!Array.isArray(collection)) {results = {}};
 	//iterate through the collection using forEach
-	array.forEach((el, i, arr) => {
+	collection.forEach((el, i, arr) => {
 	  //if the eval result of the cb passing in the element, i, and array is true, push the element to results 
-	  if(callback(el, i, arr)) {results.push(el)};;
+	  if(!callback(el, i, arr)) {results.push(el)};;
 	})
 	//return results
 	return results;
@@ -307,8 +310,19 @@ function indexOf(array, value) {
 // Returns a function that is restricted to invoking func once.
 // Repeat calls to the function return the value of the first call.
 const once = (func) => {
-	//CODE HERE
-
+	//declare a ran boolean variable initialized to false and a result variable
+	let ran = false;
+	let result = null;
+	//return function accepting any args
+	return (...args) => {
+		//if ran is true, return result
+		if(ran) {return result}
+		//else reassign ran to true
+		ran = true;
+		//reassing result to eval res of func and return
+		result = func(...args);
+		return result;
+	}
 }
 
 // Reduces collection to a value which is the accumulated result of running each element in collection through iteratee, where each successive invocation is supplied the return value of the previous. If accumulator is not provided the first element of collection is used as the initial value.

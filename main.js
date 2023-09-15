@@ -334,8 +334,21 @@ const once = (func) => {
 //  return stored + current;
 // },1); → 4
 const reduce = (array, callback, start) => {
-	//CODE HERE
-
+	//initialize accumulator and current value to 0
+	//if there is a start value, reassign current to start
+	if(start !==  undefined) {acc = start}
+	//else use first element and reassign array as the sliced version from index 1 of the array 
+	else{
+		acc = array[0];
+		array = array.slice(1);
+	}
+	//iterate through the array 
+	array.forEach((curr) => {
+		//reassign accumulator to eval result of passing in current element and accumulator
+		acc = callback(acc, curr);
+	})
+	//return accumulator
+	return acc;
 }
 
 // Takes an array and a function as arguments.
@@ -349,14 +362,26 @@ const reduce = (array, callback, start) => {
 // });  -> false
 // BONUS: use reduce in your answer
 const every = (array, func) => {
-	//CODE HERE
-
+	//iterate through the array
+	for(let i = 1; i < array.length; i++) {
+		//if function passing in current element is false return false, else return true
+		if(!func(array[i])) {return false}
+		return true;
+	}
 }
 
 // Flattens a nested array.
 // ex: flatten([1, [2, 3, [4]]]); → [1, 2, 3, [4]]
 const flatten = (array) => {
-	//CODE HERE
+	//create a results array
+
+	//iterate through paramter,
+
+		//if current element is not an arry, push to results
+
+	//else, return flatten pasing in current element
+
+	//return results;
 
 }
 
